@@ -23,3 +23,13 @@ Feature: get version
         "version": "v0.0.0-dev"
       }
       """
+  Scenario: should get hello world
+    When I send "GET" request to "/hello"
+    Then the response code should be 200
+    And the response should match json:
+      """
+      {
+        "message": "hello world"
+      }
+      """
+      

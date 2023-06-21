@@ -22,8 +22,21 @@ func getVersion(w http.ResponseWriter, r *http.Request) {
 	ok(w, data)
 }
 
+func sayHello(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "GET" {
+		fail(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	data := struct {
+		Message string `json:"message"`
+	}{Message: "hello world"}
+
+	ok(w, data)
+}
+
 func main() {
 	http.HandleFunc("/version", getVersion)
+	http.HandleFunc("/hello", sayHello)
 	http.ListenAndServe(":8080", nil)
 }
 
